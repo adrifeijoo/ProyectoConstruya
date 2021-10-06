@@ -9,9 +9,41 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ingreso de usuarios</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
+        
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container well" id="containerLogeo">
+            
+            <center> 
+                <h1 style="color: blue">Bienvenido</h1>
+                <br>
+                <img src="imagenes/1474491363_malecostume.png" class="figure-img img-fluid rounded" alt=""/>
+            </center>
+            <br>
+            <h3>Datos de usuario</h3>
+            <br>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Correo</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                -->
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Contraseña</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <!--<div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>-->
+                <br>
+                <button type="submit" class="btn btn-secondary">Iniciar Seción</button>
+                <button type="submit" class="btn btn-secondary">Registrarse</button>
+            </form>
+        </div> 
     </body>
 </html>

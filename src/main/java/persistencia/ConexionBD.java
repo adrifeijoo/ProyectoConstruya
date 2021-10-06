@@ -61,6 +61,9 @@ public class ConexionBD {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 // Realizar la conexin
+// Realizar la conexin
+// Realizar la conexin
+// Realizar la conexin
     }
 //Retornar la conexin
     public Connection getConnection() {
