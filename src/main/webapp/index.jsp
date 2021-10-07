@@ -41,8 +41,9 @@
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>-->
                 <br>
-                <button type="submit" class="btn btn-secondary">Iniciar Seción</button>
-                <button type="submit" class="btn btn-secondary">Registrarse</button>
+                <button type="submit" class="btn btn-info">Iniciar Seción</button>
+                <!--<button onclick="window.location.href='/registro.jsp'" type="submit" class="btn btn-secondary">Registrarse</button>-->
+                <a href="registro.jsp" class="btn btn-info" >Prueba</a>
             </form>
         </div> 
     </body>
