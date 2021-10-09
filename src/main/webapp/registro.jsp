@@ -80,4 +80,107 @@
             <br>
         </div>
     </body>
+    <script>
+        var app=angular.module('ProyrctoConstruya',[]);
+        app.controller('usuarioController',['$http',controladorUsuario]);
+        function controladorUsuario($http){
+            var cn = this;
+            cn.listarusuario = function () {
+                var url = "peticion_usuario.jsp";
+                var params = {
+                    proceso: "listarusuario"
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticion_usuario.jsp',
+                    params: params
+                }).then(function (res) {
+                    cn.usuario = res.data.usuario;
+                });
+            };
+            cn.guardarusuario = function () {
+                var usuario = {
+                    proceso: "guardarusuario",
+                    id: cn.id,
+                    nombre: cn.nombre,
+                    cedula: cn.cedula,
+                    telefono: cn.telefono,
+                    correo: cn.correo,
+                    contrasena: cn.contrasena,
+                    cargo: cn.cargo
+                };
+                console.log(usuario);
+                $http({
+                    method: 'POST',
+                    url: 'peticion_usuario.jsp',
+                    params: usuario
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[usuario.proceso] === true) {
+                            alert("Guardado con éxito");
+                           cn.listarContactos();
+                        } else {
+                            alert("No se guardo Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.borrarusuario = function () {
+                var usuario = {
+                    proceso: "borrarusuario",
+                    id: cn.id
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_usuario.jsp',
+                    params: usuario
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[usuario.proceso] === true) {
+                            alert("Eliminado con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.actualizarusuario = function () {
+
+                var usuario = {
+                    proceso: "actualizarusuario",
+                    id: cn.id,
+                    nombre: cn.nombre,
+                    cedula: cn.cedula,
+                    telefono: cn.telefono,
+                    correo: cn.correo,
+                    contrasena: cn.contrasena,
+                    cargo: cn.cargo
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticion_usuario.jsp',
+                    params: usuario
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[usuario.proceso] === true) {
+                            alert("actualizarusuario con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+        }
+    </script>
 </html>

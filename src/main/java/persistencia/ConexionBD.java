@@ -86,10 +86,12 @@ public class ConexionBD {
             stmt= con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs= stmt.executeQuery(sentencia);
         } catch (SQLException sqlex) {
-//catch (RuntimeException rex) {
-//} catch (Exception ex) {
-//}
+        }catch (RuntimeException rex) {
+            System.out.println(rex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
+        
         return rs;
     }
 // Mtodoque realiza un INSERT y devuelve TRUE si la operacinfue existosa

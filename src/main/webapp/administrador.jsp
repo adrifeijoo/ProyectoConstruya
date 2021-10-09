@@ -18,7 +18,7 @@
         
     </head>
     <body>
-        <div class="container-fluid" id="administra" ng-app="ProyectoConstruya" ng-controller="insumosController as cn">
+        <div class="container-fluid" id="administra" >
             <img src="imagenes/1474491363_malecostume.png" class="figure-img img-fluid rounded" alt="" width="100px"/>
             <center><h1 style="color: green">Bienvenido Administrador</h1></center>
             <br>
@@ -111,4 +111,12 @@
             </tr>
         </table>
     </body>
+    <script>
+        var app = angular.module('ProysctoConstruya',[]);
+        app.controller('insumosController',['$http',controladorInsumos]);
+        function controladorInsumos($http){
+            var cn=this;
+            cn.
+        }
+    </script>
 </html>
