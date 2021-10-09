@@ -1,6 +1,6 @@
 <%-- 
-    Document   : administrador
-    Created on : 6/10/2021, 08:31:14 PM
+    Document   : modificar_mate
+    Created on : 8/10/2021, 06:34:09 PM
     Author     : Adriana Feijoo Almonacid
 --%>
 
@@ -12,10 +12,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
        
         <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-        <title>Administrador</title>
+        
+        <title>Modificar materiales</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
-        
     </head>
     <body>
         <div class="container-fluid" id="administra" ng-app="ProyectoConstruya" ng-controller="insumosController as cn">
@@ -48,50 +48,6 @@
             </nav>
         </div>
         <br>
-        <br>
-    <center>
-        <img src="imagenes/materiales.jpg" alt=""/>
-    </center>
-    <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController an cn">
-        <br>
-            <div class="row">
-                <div class="col-8">
-                    <label>Nombre del material</label>
-                    <input class="form-control" type="text" ng-model="cn.nombre_material" required>
-                </div>
-            </div>
-        <br>
-            <div class="row">
-                <div class="col-8">
-                    <label>Unidad de medida</label>
-                    <input class="form-control" type="number" min="0" ng-model="cn.unidad" required>
-                </div>
-            </div>
-        <br>
-            <div class="row">
-                <div class="col-8">
-                    <label>Rendimiento del material</label>
-                    <input class="form-control" type="text" ng-model="cn.rendimiento" required>
-                </div>
-                <div class="col-3">
-                     <a href="" class="btn btn-success" >Guardar material</a>
-                </div>
-            </div>
-        <br>
-            <div class="row">
-                <div class="col-8">
-                    <label>Precio</label>
-                    <input class="form-control" type="number" min="0" ng-model="cn.precio" required>
-                </div>
-            </div>
-    </div>
-    <br>
-    <center><h3>Ver todos los materiales</h3></center>
-    <br>
-    <center>
-        <a href="" class="btn btn-success" >Lista meteriales</a>
-    </center>
-    <br>
         <table class="table table-striped table-hover">
             <thead class="thead-light">
                 <tr>
@@ -110,5 +66,66 @@
                 <td>{{insumos.precio}}</td>
             </tr>
         </table>
+        <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController an cn">
+            <div class="row">
+                <div class="col-12">
+                    <center><h3>Consultar</h3></center> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Nombre del material</label>
+                    <input class="form-control" type="text" ng-model="cn.nombre_material" required>
+                </div>
+                <div class="col-3">
+                     <a href="" class="btn btn-success" >Consultar material</a>
+                </div>
+            </div>
+            <br>
+        <div class="row">
+                <div class="col-12">
+                    <center><h3>Modificar</h3></center> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Id material</label>
+                    <input class="form-control" type="number" min="0" ng-model="cn.id_insumo" required>
+                </div>
+            </div>
+        <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Nombre del material</label>
+                    <input class="form-control" type="text" ng-model="cn.nombre_material" required>
+                </div>
+            </div>
+        <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Unidad de medida</label>
+                    <input class="form-control" type="number" min="0" ng-model="cn.unidad" required>
+                </div>
+                <div class="col-3">
+                     <a href="" class="btn btn-success" >Modificar material</a>
+                </div>
+            </div>
+        <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Rendimiento del material</label>
+                    <input class="form-control" type="text" ng-model="cn.rendimiento" required>
+                </div>
+            </div>
+        <br>
+            <div class="row">
+                <div class="col-8">
+                    <label>Precio</label>
+                    <input class="form-control" type="number" min="0" ng-model="cn.precio" required>
+                </div>
+            </div>
+    </div>
     </body>
 </html>
