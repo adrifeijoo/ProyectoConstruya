@@ -7,7 +7,7 @@
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.sql.SQLException"%>
-<%@page import="logica.insumos"%>
+<%@page import="logica.Insumo"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.List"%>
@@ -19,10 +19,10 @@
 
     //Lista de procesos o tareas a realizar 
     List<String> tareas = Arrays.asList(new String[]{
-        "actualizarinsumos",
-        "borrarinsumos",
-        "listarinsumos",
-        "guardarinsumos"
+        "actualizarinsumo",
+        "eliminarinsumo",
+        "listarinsumo",
+        "guardarInsumo"
     });
     
     String proceso = "" + request.getParameter("proceso");
@@ -33,65 +33,65 @@
         // ------------------------------------------------------------------------------------- //
         // -----------------------------------INICIO PROCESOS----------------------------------- //
         // ------------------------------------------------------------------------------------- //
-        if (proceso.equals("guardarinsumos")) {
+        if (proceso.equals("guardarInsumo")) {
             int id_insumo = Integer.parseInt(request.getParameter("id_insumo"));
             String nombre_material = request.getParameter("nombre_material");
-            int unidad = Integer.parseInt(request.getParameter("unidad"));
+            String unidad = request.getParameter("unidad");
             String rendimiento = request.getParameter("rendimiento");
             double precio = Doble.parseDouble(request.getParameter("precio"));
             
             //boolean favorito = Boolean.parseBoolean(request.getParameter("favorito"));
             //su codigo acá
-            insumos c= new insumos();
+            Insumo c= new Insumo();
             c.setId_insumo(id_insumo);
             c.setNombre_material(nombre_material)
             c.setUnidad(unidad);
             c.setRendimiento(rendimiento);
             c.setPrecio(precio);
             
-            if (c.guardarinsumos()){
+            if (c.guardarInsumo()){
                     respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
             }
 
-        } else if (proceso.equals("borrarinsumos")) {
+        } else if (proceso.equals("eliminarinsumo")) {
             int id_insumo = Integer.parseInt(request.getParameter("id_insumo"));
             //su codigo acá
-            insumos c= new insumos();
-            if (c.borrarinsumos(id_insumo)) {
+            Insumo c= new Insumo();
+            if (c.borrarInsumo(id_insumo)) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";
             }
 
-        } else if (proceso.equals("listarinsumos")) {
+        } else if (proceso.equals("listarinsumo")) {
             //su codigo acá
-            insumos c= new insumos();
+            Insumo c= new Insumo();
             try {
-                List<insumos> lista = c.listarinsumos();
-                respuesta += "\"" + proceso + "\": true,\"insumos\":" + new Gson().toJson(lista);
+                List<Insumo> lista = c.listarInsumos();
+                respuesta += "\"" + proceso + "\": true,\"Insumos\":" + new Gson().toJson(lista);
             } catch (SQLException ex) {
-                respuesta += "\"" + proceso + "\": true,\"insumos\":[]";
-                Logger.getLogger(insumos.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta += "\"" + proceso + "\": true,\"Insumos\":[]";
+                Logger.getLogger(Insumo.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (proceso.equals("actualizarinsumos")) {
+        } else if (proceso.equals("actualizarinsumo")) {
             int id_insumo = Integer.parseInt(request.getParameter("id_insumo"));
             String nombre_material = request.getParameter("nombre_material");
-            int unidad = Integer.parseInt(request.getParameter("unidad"));
+            String unidad = request.getParameter("unidad");
             String rendimiento = request.getParameter("rendimiento");
             double precio = Double.parseDouble(request.getParameter("precio"));
             
           
             //su codigo acá
-            insumos c= new insumos(); 
+            Insumo c= new Insumo(); 
             c.setId_insumo(id_insumo);
             c.setNombre_material(nombre_material);
             c.setUnidad(undad);
             c.setRendimiento(rendimiento);
             c.setPrecio(precio);
             
-            if (c.actualizarinsumos()) {
+            if (c.actualizarInsumo()) {
                 respuesta += "\"" + proceso + "\": true";
             } else {
                 respuesta += "\"" + proceso + "\": false";

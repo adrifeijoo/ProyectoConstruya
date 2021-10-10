@@ -15,22 +15,21 @@ import persistencia.ConexionBD;
  *
  * @author Adriana Feijoo Almonacid
  */
-public class insumos {
+public class Insumo {
+    
     private int id_insumo;
     private String nombre_material;
     private String unidad;
     private String rendimiento;
     private double precio;
     
-    public insumos(){
+    public Insumo(){
 
 }
-    
-    public insumos(String nombre_material, String unidad, String rendimiento, double precio){
-        this.nombre_material = nombre_material;
-        this.unidad = unidad;
-        this.rendimiento = rendimiento;
-        this.precio = precio;
+    // se puede cambiar segun el tutor 
+    public Insumo getInsumo(int id_insumo) throws SQLException{
+        this.id_insumo=id_insumo;
+        return this.getInsumo();
     }
 
     public int getId_insumo() {
@@ -73,10 +72,12 @@ public class insumos {
         this.precio = precio;
     }
     
-    public boolean guardarinsumos(){
+    public boolean guardarInsumo(){
         ConexionBD conexion = new ConexionBD();
-        String sentencia ="INSERT INTO 'insumos'('id_insumo','nombre_material','unidad','rendimiento','precio')"
-                +"VALUES ('"+this.id_insumo+"','"+this.nombre_material+"','"+this.unidad+"','"+this.rendimiento+"','"+this.precio+"');";
+        String sentencia ="INSERT INTO insumos(id_insumo, nombre_material, unidad, rendimiento, precio) "
+                +" VALUES ('" + this.id_insumo + "','" + this.nombre_material 
+                + "','" + this.unidad + "','" + this.rendimiento + "','" 
+                + this.precio + "'); ";
         if(conexion.setAutoCommitBD(false)){
             if(conexion.insertarBD(sentencia)){
                 conexion.commitBD();
@@ -93,8 +94,8 @@ public class insumos {
         }
     }
     
-    public boolean borrarinsumos(int id_insumo){
-        String Sentencia ="DELETE FROM 'insumos' WHERE 'id_insumo'='"+ id_insumo+"';";
+    public boolean borrarInsumo(int id_insumo){
+        String Sentencia ="DELETE FROM `insumos` WHERE `id_insumo`='" + id_insumo + "'";
         ConexionBD conexion = new ConexionBD();
         if(conexion.setAutoCommitBD(false)){
             if(conexion.actualizarBD(Sentencia)){
@@ -112,9 +113,9 @@ public class insumos {
         }
     }
     
-    public boolean actualizarinsumos() {
+    public boolean actualizarInsumo() {
         ConexionBD conexion = new ConexionBD();
-        String Sentencia = "UPDATE `insumos` SET id_insumo='" + this.id_insumo + "',nombre_material='" + this.nombre_material + "',unidad='" + this.unidad
+        String Sentencia = "UPDATE `insumos` SET nombre_material='" + this.nombre_material + "',unidad='" + this.unidad
                 + "',rendimiento='" + this.rendimiento + "',precio='" + this.precio + "' WHERE id_insumo=" + this.id_insumo + ";";
         if (conexion.setAutoCommitBD(false)) {
             if (conexion.actualizarBD(Sentencia)) {
@@ -132,27 +133,27 @@ public class insumos {
         }
     }
 
-    public List<insumos> listarinsumos() throws SQLException {
+    public List<Insumo> listarInsumos() throws SQLException {
         ConexionBD conexion = new ConexionBD();
-        List<insumos> listainsumos = new ArrayList<>();
-        String sql = "SELECT * FROM 'insumos' order by id_insumo asc";
+        List<Insumo> listaInsumos = new ArrayList<>();
+        String sql = "select * from insumos order by id_insumo asc";
         ResultSet rs = conexion.consultarBD(sql);
-        insumos c;
+        Insumo c;
         while (rs.next()) {
-            c = new insumos();
+            c = new Insumo();
             c.setId_insumo(rs.getInt("id_insumo"));
             c.setNombre_material(rs.getString("nombre_material"));
             c.setUnidad(rs.getString("unidad"));
             c.setRendimiento(rs.getString("rendimiento"));
             c.setPrecio(rs.getDouble("precio"));
-            listainsumos.add(c);
+            listaInsumos.add(c);
 
         }
         conexion.cerrarConexion();
-        return listainsumos;
+        return listaInsumos;
     }
 
-    public insumos getinsumos() throws SQLException {
+    public Insumo getInsumo() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         String sql = "select * from insumos where id_insumo='" + this.id_insumo + "'";
         ResultSet rs = conexion.consultarBD(sql);
@@ -174,6 +175,6 @@ public class insumos {
 
     @Override
     public String toString() {
-        return "insumos{" + "id_insumo=" + id_insumo + ", nombre_material=" + nombre_material + ", unidad=" + unidad + ", rendimento=" + rendimiento + ", precio=" + precio + '}';
+        return "Insumo{" + "id_insumo=" + id_insumo + ", nombre_material=" + nombre_material + ", unidad=" + unidad + ", rendimento=" + rendimiento + ", precio=" + precio + '}';
     }
 }

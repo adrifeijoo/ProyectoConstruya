@@ -41,7 +41,7 @@ public class ConexionBD {
             username= "root"; //usuario base de datos global
             password = "Dasher2794";
         } else {
-            host = "mysql1007.mochahost.com:3306";
+            host = "us-mm-auto-dca-04-b.cleardb.net:3306";
             db= "construya";
             url= "jdbc:mysql://" + host + "/" + db; //URL DB
             username= "root"; //usuario base de datos global
@@ -158,7 +158,7 @@ closeConnection(con);
             con.commit();
             return true;
         } catch (SQLException sqlex) {
-            System.out.println("Error al hacercommit " + sqlex.getMessage());
+            System.out.println("Error al hacer commit " + sqlex.getMessage());
             return false;
         }
     }
@@ -167,7 +167,7 @@ closeConnection(con);
             con.rollback();
             return true;
         } catch (SQLException  sqlex) {
-            System.out.println("Error al hacerrollback " + sqlex.getMessage());
+            System.out.println("Error al hacer rollback " + sqlex.getMessage());
             return false;
         }
     }

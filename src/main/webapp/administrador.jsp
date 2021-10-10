@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
        
         <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -18,7 +18,7 @@
         
     </head>
     <body>
-        <div class="container-fluid" id="administra" >
+        <div class="container-fluid" id="administra">
             <img src="imagenes/1474491363_malecostume.png" class="figure-img img-fluid rounded" alt="" width="100px"/>
             <center><h1 style="color: green">Bienvenido Administrador</h1></center>
             <br>
@@ -52,7 +52,7 @@
     <center>
         <img src="imagenes/materiales.jpg" alt=""/>
     </center>
-    <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController an cn">
+    <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController as cn">
         <br>
             <div class="row">
                 <div class="col-8">
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-3">
                     <!--<a class="btn btn-success" ng-click="cn.guardarinsumos()" >Guardar material</a>-->
-                    <button class="btn btn-success" ng-click="cn.guardarinsumos()">Guardar material</button>
+                    <button class="btn btn-success" ng-click="cn.guardarInsumo()">Guardar material</button>
                 </div>
             </div>
         <br>
@@ -85,13 +85,13 @@
                     <input class="form-control" type="number" min="0" ng-model="cn.precio" required>
                 </div>
             </div>
-    </div>
+    
     <br>
     <center><h3>Ver todos los materiales</h3></center>
     <br>
     <center>
         <!--<a class="btn btn-success" ng-click="cn.listarinsumos">Lista materiales</a>-->
-        <button class="btn btn-success" ng-click="cn.listarinsumos()">Lista materiales</button>
+        <button class="btn btn-success" ng-click="cn.listarInsumos()">Lista materiales</button>
     </center>
     <br>
         <table class="table table-striped table-hover">
@@ -104,37 +104,38 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tr ng-repeat = "Insumo in cn.Insumo">
-                <td>{{Insumo.id_insumo}}</td>
-                <td>{{Insumo.nombre_material}}</td>
-                <td>{{Insumo.unidad}}</td>
-                <td>{{Insumo.rendimiento}}</td>
-                <td>{{Insumo.precio}}</td>
+            <tr ng-repeat = "insumo in cn.insumos">
+                <td>{{insumo.id_insumo}}</td>
+                <td>{{insumo.nombre_material}}</td>
+                <td>{{insumo.unidad}}</td>
+                <td>{{insumo.rendimiento}}</td>
+                <td>{{insumo.precio}}</td>
             </tr>
         </table>
+    </div>
     </body>
    <script>
         var app = angular.module('ProyectoConstruya', []);
-        app.controller('insumosController', ['$http', controladorinsumos]);
-        function controladorinsumos($http) {
+        app.controller('insumosController', ['$http', controladorInsumos]);
+        function controladorInsumos($http) {
             var cn = this;
-            cn.listarinsumos = function () {
+            cn.listarInsumos = function () {
                 var url = "peticiones_insumos.jsp";
                 var params = {
-                    proceso: "listarinsumos"
+                    proceso: "listarinsumo"
                 };
                 $http({
                     method: 'POST',
                     url: 'peticiones_insumos.jsp',
                     params: params
                 }).then(function (res) {
-                    cn.insumo = res.data.insumos;
+                    cn.insumos = res.data.Insumos;
                 });
             };
-            cn.guardarinsumos = function () {
-                var insumos = {
-                    proceso: "guardarinsumos",
-                    id_insimo: cn.id_insimo,
+            cn.guardarInsumo = function () {
+                var insumo = {
+                    proceso: "guardarInsumo",
+                    id_insumo: cn.id_insumo,
                     nombre_material: cn.nombre_material,
                     unidad: cn.unidad,
                     rendimiento: cn.rendimiento,
@@ -149,9 +150,9 @@
                     if (res.data.ok === true) {
                         if (res.data[insumo.proceso] === true) {
                             alert("Guardado con éxito");
-                           cn.listarinsumos();
+                           cn.listarInsumos();
                         } else {
-                            alert("No se guardo Por favor vefifique sus datos");
+                            alert("No se guardo Por favor verifique sus datos");
                         }
                     } else {
                         alert(res.data.errorMsg);
@@ -159,22 +160,22 @@
                 });
 
             };
-            cn.borrarinsumos = function () {
-                var insumos = {
-                    proceso: "borrarinsumos",
+            cn.eliminarInsumo = function () {
+                var insumo = {
+                    proceso: "eliminarinsumo",
                     id_insumo: cn.id_insumo
                 };
                 $http({
                     method: 'POST',
                     url: 'peticiones_insumos.jsp',
-                    params: insumos
+                    params: insumo
                 }).then(function (res) {
                     if (res.data.ok === true) {
-                        if (res.data[insumos.proceso] === true) {
+                        if (res.data[insumo.proceso] === true) {
                             alert("Eliminado con éxito");
                             //                                cn.listarContactos();
                         } else {
-                            alert("Por favor vefifique sus datos");
+                            alert("Por favor verifique sus datos");
                         }
                     } else {
                         alert(res.data.errorMsg);
@@ -182,11 +183,11 @@
                 });
 
             };
-            cn.actualizarinsumos = function () {
+            cn.actualizarInsumo = function () {
 
-                var insumos = {
-                    proceso: "actualizarinsumos",
-                    id_insimo: cn.id_insimo,
+                var insumo = {
+                    proceso: "actualizarinsumo",
+                    id_insumo: cn.id_insumo,
                     nombre_material: cn.nombre_material,
                     unidad: cn.unidad,
                     rendimiento: cn.rendimiento,
@@ -195,14 +196,14 @@
                 $http({
                     method: 'POST',
                     url: 'peticiones_insumos.jsp',
-                    params: insumos
+                    params: insumo
                 }).then(function (res) {
                     if (res.data.ok === true) {
-                        if (res.data[insumos.proceso] === true) {
-                            alert("actualizarinsumos con éxito");
+                        if (res.data[insumo.proceso] === true) {
+                            alert("actualizarinsumo con éxito");
                             //                                cn.listarContactos();
                         } else {
-                            alert("Por favor vefifique sus datos");
+                            alert("Por favor verifique sus datos");
                         }
                     } else {
                         alert(res.data.errorMsg);
