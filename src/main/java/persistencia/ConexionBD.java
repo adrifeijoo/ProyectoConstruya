@@ -39,13 +39,13 @@ public class ConexionBD {
             db= "construya";
             url= "jdbc:mysql://" + host + "/" + db; //URL DB
             username= "root"; //usuario base de datos global
-            password = "Dasher.2794";
+            password = "Dasher2794";
         } else {
             host = "mysql1007.mochahost.com:3306";
             db= "construya";
             url= "jdbc:mysql://" + host + "/" + db; //URL DB
             username= "root"; //usuario base de datos global
-            password = "Dasher.2794";
+            password = "Dasher2794";
         }
         try {
 //Asignacindel Driver

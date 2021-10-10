@@ -18,7 +18,7 @@ import persistencia.ConexionBD;
 public class insumos {
     private int id_insumo;
     private String nombre_material;
-    private int unidad;
+    private String unidad;
     private String rendimiento;
     private double precio;
     
@@ -26,7 +26,7 @@ public class insumos {
 
 }
     
-    public insumos(String nombre_material, int unidad, String rendimiento, double precio){
+    public insumos(String nombre_material, String unidad, String rendimiento, double precio){
         this.nombre_material = nombre_material;
         this.unidad = unidad;
         this.rendimiento = rendimiento;
@@ -49,11 +49,11 @@ public class insumos {
         this.nombre_material = nombre_material;
     }
 
-    public int getUnidad() {
+    public String getUnidad() {
         return unidad;
     }
 
-    public void setUnidad(int unidad) {
+    public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
 
@@ -75,7 +75,7 @@ public class insumos {
     
     public boolean guardarinsumos(){
         ConexionBD conexion = new ConexionBD();
-        String sentencia ="INSERT INTO insumos(id_insumo,nombre_material,unidad,rendimiento,precio)"
+        String sentencia ="INSERT INTO 'insumos'('id_insumo','nombre_material','unidad','rendimiento','precio')"
                 +"VALUES ('"+this.id_insumo+"','"+this.nombre_material+"','"+this.unidad+"','"+this.rendimiento+"','"+this.precio+"');";
         if(conexion.setAutoCommitBD(false)){
             if(conexion.insertarBD(sentencia)){
@@ -94,7 +94,7 @@ public class insumos {
     }
     
     public boolean borrarinsumos(int id_insumo){
-        String Sentencia ="DELETE FROM 'insumos' WHERE 'id_insumo'='"+ id_insumo+"'";
+        String Sentencia ="DELETE FROM 'insumos' WHERE 'id_insumo'='"+ id_insumo+"';";
         ConexionBD conexion = new ConexionBD();
         if(conexion.setAutoCommitBD(false)){
             if(conexion.actualizarBD(Sentencia)){
@@ -135,14 +135,14 @@ public class insumos {
     public List<insumos> listarinsumos() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         List<insumos> listainsumos = new ArrayList<>();
-        String sql = "select * from insumos order by id_insumo asc";
+        String sql = "SELECT * FROM 'insumos' order by id_insumo asc";
         ResultSet rs = conexion.consultarBD(sql);
         insumos c;
         while (rs.next()) {
             c = new insumos();
             c.setId_insumo(rs.getInt("id_insumo"));
             c.setNombre_material(rs.getString("nombre_material"));
-            c.setUnidad(rs.getInt("unidad"));
+            c.setUnidad(rs.getString("unidad"));
             c.setRendimiento(rs.getString("rendimiento"));
             c.setPrecio(rs.getDouble("precio"));
             listainsumos.add(c);
@@ -159,7 +159,7 @@ public class insumos {
         if (rs.next()) {
             this.id_insumo = rs.getInt("id_insumo");
             this.nombre_material = rs.getString("nombre_material");
-            this.unidad = rs.getInt("unidad");
+            this.unidad = rs.getString("unidad");
             this.rendimiento = rs.getString("rendimiento");
             this.precio = rs.getDouble("precio");
             conexion.cerrarConexion();

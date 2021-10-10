@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-8">
                     <label>Unidad de medida</label>
-                    <input class="form-control" type="number" min="0" ng-model="cn.unidad" required>
+                    <input class="form-control" type="text" ng-model="cn.unidad" required>
                 </div>
             </div>
         <br>
@@ -74,7 +74,8 @@
                     <input class="form-control" type="text" ng-model="cn.rendimiento" required>
                 </div>
                 <div class="col-3">
-                     <a href="" class="btn btn-success" >Guardar material</a>
+                    <!--<a class="btn btn-success" ng-click="cn.guardarinsumos()" >Guardar material</a>-->
+                    <button class="btn btn-success" ng-click="cn.guardarinsumos()">Guardar material</button>
                 </div>
             </div>
         <br>
@@ -89,7 +90,8 @@
     <center><h3>Ver todos los materiales</h3></center>
     <br>
     <center>
-        <a href="" class="btn btn-success" >Lista meteriales</a>
+        <!--<a class="btn btn-success" ng-click="cn.listarinsumos">Lista materiales</a>-->
+        <button class="btn btn-success" ng-click="cn.listarinsumos()">Lista materiales</button>
     </center>
     <br>
         <table class="table table-striped table-hover">
@@ -102,21 +104,113 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tr ng-repeat="insumos in cn.insumos">
-                <td>{{insumos.id_insumo}}</td>
-                <td>{{insumos.nombre_material}}</td>
-                <td>{{insumos.unidad}}</td>
-                <td>{{insumos.rendimiento}}</td>
-                <td>{{insumos.precio}}</td>
+            <tr ng-repeat = "Insumo in cn.Insumo">
+                <td>{{Insumo.id_insumo}}</td>
+                <td>{{Insumo.nombre_material}}</td>
+                <td>{{Insumo.unidad}}</td>
+                <td>{{Insumo.rendimiento}}</td>
+                <td>{{Insumo.precio}}</td>
             </tr>
         </table>
     </body>
-    <script>
-        var app = angular.module('ProysctoConstruya',[]);
-        app.controller('insumosController',['$http',controladorInsumos]);
-        function controladorInsumos($http){
-            var cn=this;
-            cn.
+   <script>
+        var app = angular.module('ProyectoConstruya', []);
+        app.controller('insumosController', ['$http', controladorinsumos]);
+        function controladorinsumos($http) {
+            var cn = this;
+            cn.listarinsumos = function () {
+                var url = "peticiones_insumos.jsp";
+                var params = {
+                    proceso: "listarinsumos"
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: params
+                }).then(function (res) {
+                    cn.insumo = res.data.insumos;
+                });
+            };
+            cn.guardarinsumos = function () {
+                var insumos = {
+                    proceso: "guardarinsumos",
+                    id_insimo: cn.id_insimo,
+                    nombre_material: cn.nombre_material,
+                    unidad: cn.unidad,
+                    rendimiento: cn.rendimiento,
+                    precio: cn.precio
+                };
+                console.log(insumo);
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumo
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumo.proceso] === true) {
+                            alert("Guardado con éxito");
+                           cn.listarinsumos();
+                        } else {
+                            alert("No se guardo Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.borrarinsumos = function () {
+                var insumos = {
+                    proceso: "borrarinsumos",
+                    id_insumo: cn.id_insumo
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumos
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumos.proceso] === true) {
+                            alert("Eliminado con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.actualizarinsumos = function () {
+
+                var insumos = {
+                    proceso: "actualizarinsumos",
+                    id_insimo: cn.id_insimo,
+                    nombre_material: cn.nombre_material,
+                    unidad: cn.unidad,
+                    rendimiento: cn.rendimiento,
+                    precio: cn.precio
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumos
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumos.proceso] === true) {
+                            alert("actualizarinsumos con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+           
         }
     </script>
 </html>

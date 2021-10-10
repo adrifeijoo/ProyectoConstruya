@@ -128,4 +128,104 @@
             </div>
     </div>
     </body>
+    <script>
+        var app = angular.module('ProyectoConstruya', []);
+        app.controller('insumosController', ['$http', controladorInsumos]);
+        function controladorInsumos($http) {
+            var cn = this;
+            cn.listarinsumos = function () {
+                var url = "peticiones_insumos.jsp";
+                var params = {
+                    proceso: "listarinsumos"
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: params
+                }).then(function (res) {
+                    cn.insumos = res.data.insumos;
+                });
+            };
+            cn.guardarInsumos = function () {
+                var insumos = {
+                    proceso: "guardarinsumos",
+                    id_insimo: cn.id_insimo,
+                    nombre_material: cn.nombre_material,
+                    unidad: cn.unidad,
+                    rendimiento: cn.rendimiento,
+                    precio: cn.precio
+                };
+                console.log(insumos);
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumos
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumos.proceso] === true) {
+                            alert("Guardado con éxito");
+                           cn.listarInsumos();
+                        } else {
+                            alert("No se guardo Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.borrarInsumos = function () {
+                var insumos = {
+                    proceso: "borrarinsumos",
+                    id_insumo: cn.id_insumo
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumos
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumos.proceso] === true) {
+                            alert("Eliminado con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+            cn.actualizarInsumos = function () {
+
+                var insumos = {
+                    proceso: "actualizarinsumos",
+                    id_insimo: cn.id_insimo,
+                    nombre_material: cn.nombre_material,
+                    unidad: cn.unidad,
+                    rendimiento: cn.rendimiento,
+                    precio: cn.precio
+                };
+                $http({
+                    method: 'POST',
+                    url: 'peticiones_insumos.jsp',
+                    params: insumos
+                }).then(function (res) {
+                    if (res.data.ok === true) {
+                        if (res.data[insumos.proceso] === true) {
+                            alert("actualizarinsumos con éxito");
+                            //                                cn.listarContactos();
+                        } else {
+                            alert("Por favor vefifique sus datos");
+                        }
+                    } else {
+                        alert(res.data.errorMsg);
+                    }
+                });
+
+            };
+           
+        }
+    </script>
 </html>

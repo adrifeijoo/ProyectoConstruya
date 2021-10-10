@@ -70,7 +70,7 @@
             <br>
             <div class="row">
                 <div class="col-3">
-                    <button class="btn btn-info" ng-click="cn.guardarusuario">Registrarse</button>
+                    <button class="btn btn-info" ng-click="cn.guardarusuario()">Registrarse</button>
                 </div>
                 <div class="col-3">
                      <a href="index.jsp" class="btn btn-info" >Volver</a>
