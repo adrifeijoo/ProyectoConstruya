@@ -34,17 +34,17 @@
         // -----------------------------------INICIO PROCESOS----------------------------------- //
         // ------------------------------------------------------------------------------------- //
         if (proceso.equals("guardarInsumo")) {
-            int id_insumo = Integer.parseInt(request.getParameter("id_insumo"));
+            //int id_insumo = Integer.parseInt(request.getParameter("id_insumo"));
             String nombre_material = request.getParameter("nombre_material");
             String unidad = request.getParameter("unidad");
             String rendimiento = request.getParameter("rendimiento");
-            double precio = Doble.parseDouble(request.getParameter("precio"));
+            double precio = Double.parseDouble(request.getParameter("precio"));
             
             //boolean favorito = Boolean.parseBoolean(request.getParameter("favorito"));
             //su codigo acá
             Insumo c= new Insumo();
-            c.setId_insumo(id_insumo);
-            c.setNombre_material(nombre_material)
+            //c.setId_insumo(id_insumo);
+            c.setNombre_material(nombre_material); 
             c.setUnidad(unidad);
             c.setRendimiento(rendimiento);
             c.setPrecio(precio);
@@ -87,7 +87,7 @@
             Insumo c= new Insumo(); 
             c.setId_insumo(id_insumo);
             c.setNombre_material(nombre_material);
-            c.setUnidad(undad);
+            c.setUnidad(unidad);
             c.setRendimiento(rendimiento);
             c.setPrecio(precio);
             

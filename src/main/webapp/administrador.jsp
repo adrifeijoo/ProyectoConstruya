@@ -52,7 +52,7 @@
     <center>
         <img src="imagenes/materiales.jpg" alt=""/>
     </center>
-    <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController as cn">
+    <div class="container-fluid" ng-app="Construya" ng-controller="insumosController as cn">
         <br>
             <div class="row">
                 <div class="col-8">
@@ -115,7 +115,7 @@
     </div>
     </body>
    <script>
-        var app = angular.module('ProyectoConstruya', []);
+        var app = angular.module('Construya', []);
         app.controller('insumosController', ['$http', controladorInsumos]);
         function controladorInsumos($http) {
             var cn = this;

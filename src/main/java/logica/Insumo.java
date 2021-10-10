@@ -55,7 +55,7 @@ public class Insumo {
     public void setUnidad(String unidad) {
         this.unidad = unidad;
     }
-
+    
     public String getRendimiento() {
         return rendimiento;
     }
