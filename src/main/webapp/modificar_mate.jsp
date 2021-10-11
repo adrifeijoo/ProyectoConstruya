@@ -8,9 +8,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-       
         <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
         
         <title>Modificar materiales</title>
@@ -18,7 +17,7 @@
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="container-fluid" id="administra" ng-app="ProyectoConstruya" ng-controller="insumosController as cn">
+        <div class="container-fluid" id="administra">
             <img src="imagenes/1474491363_malecostume.png" class="figure-img img-fluid rounded" alt="" width="100px"/>
             <center><h1 style="color: green">Bienvenido Administrador</h1></center>
             <br>
@@ -48,6 +47,7 @@
             </nav>
         </div>
         <br>
+        <div class="container-fluid" ng-app="Construya" ng-controller="insumosController an cn">
         <table class="table table-striped table-hover">
             <thead class="thead-light">
                 <tr>
@@ -58,15 +58,15 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tr ng-repeat="insumos in cn.insumos">
-                <td>{{insumos.id_insumo}}</td>
-                <td>{{insumos.nombre_material}}</td>
-                <td>{{insumos.unidad}}</td>
-                <td>{{insumos.rendimiento}}</td>
-                <td>{{insumos.precio}}</td>
+            <tr ng-repeat="insumo in cn.insumos">
+                <td>{{insumo.id_insumo}}</td>
+                <td>{{insumo.nombre_material}}</td>
+                <td>{{insumo.unidad}}</td>
+                <td>{{insumo.rendimiento}}</td>
+                <td>{{insumo.precio}}</td>
             </tr>
         </table>
-        <div class="container-fluid" ng-app="ProyectoConstruya" ng-controller="insumosController an cn">
+        
             <div class="row">
                 <div class="col-12">
                     <center><h3>Consultar</h3></center> 
@@ -79,7 +79,8 @@
                     <input class="form-control" type="text" ng-model="cn.nombre_material" required>
                 </div>
                 <div class="col-3">
-                     <a href="" class="btn btn-success" >Consultar material</a>
+                     <!--<a href="" class="btn btn-success" >Consultar material</a>-->
+                     <button class="btn btn-success" ng-click="cn.listarInsumos()">Consultar material</button>
                 </div>
             </div>
             <br>
@@ -106,10 +107,11 @@
             <div class="row">
                 <div class="col-8">
                     <label>Unidad de medida</label>
-                    <input class="form-control" type="number" min="0" ng-model="cn.unidad" required>
+                    <input class="form-control" type="text" ng-model="cn.unidad" required>
                 </div>
                 <div class="col-3">
-                     <a href="" class="btn btn-success" >Modificar material</a>
+                     <!--<a href="" class="btn btn-success" >Modificar material</a>-->
+                     <button class="btn btn-success" ng-click="cn.actualizarInsumo()">Modificar material</button>
                 </div>
             </div>
         <br>
@@ -126,106 +128,100 @@
                     <input class="form-control" type="number" min="0" ng-model="cn.precio" required>
                 </div>
             </div>
+        
     </div>
     </body>
     <script>
-        var app = angular.module('ProyectoConstruya', []);
+        var app = angular.module('Construya', []);
         app.controller('insumosController', ['$http', controladorInsumos]);
         function controladorInsumos($http) {
-            var cn = this;
-            cn.listarinsumos = function () {
-                var url = "peticiones_insumos.jsp";
-                var params = {
-                    proceso: "listarinsumos"
-                };
-                $http({
-                    method: 'POST',
-                    url: 'peticiones_insumos.jsp',
-                    params: params
-                }).then(function (res) {
-                    cn.insumos = res.data.insumos;
-                });
-            };
-            cn.guardarInsumos = function () {
-                var insumos = {
-                    proceso: "guardarinsumos",
-                    id_insimo: cn.id_insimo,
-                    nombre_material: cn.nombre_material,
-                    unidad: cn.unidad,
-                    rendimiento: cn.rendimiento,
-                    precio: cn.precio
-                };
-                console.log(insumos);
-                $http({
-                    method: 'POST',
-                    url: 'peticiones_insumos.jsp',
-                    params: insumos
-                }).then(function (res) {
-                    if (res.data.ok === true) {
-                        if (res.data[insumos.proceso] === true) {
-                            alert("Guardado con éxito");
+           var cn = this;
+           cn.listarInsumos = function () {
+               var url = "peticiones_insumos.jsp";
+               var params = {
+                   proceso: "listarinsumo"
+               };
+               $http({
+                   method:'POST',
+                   url: 'peticiones_insumos.jsp',
+                   params: params
+               }).then(function(res){
+                   cn.insumos = res.data.Insumos;
+               });
+           };
+           cn.guardarInsumo = function () {
+               var insumo = {
+                   proceso: "guardarInsumo",
+                   id_insumo: cn.id_insumo,
+                   nombre_material: cn.nombre_material,
+                   unidad: cn.unidad,
+                   rendimiento: cn.rendimiento,
+                   precio: cn.precio
+               };
+               console.log(insumo);
+               $http({
+                   method: 'POST',
+                   url: 'peticiones_insumos.jsp',
+                   params: insumo
+               }).then(function (res)) {
+                   if(res.data.ok === true) {
+                       if(res.data[insumo.proceso] === true) {
+                           alert("Guardado con exito");
                            cn.listarInsumos();
-                        } else {
-                            alert("No se guardo Por favor vefifique sus datos");
-                        }
-                    } else {
-                        alert(res.data.errorMsg);
-                    }
-                });
-
-            };
-            cn.borrarInsumos = function () {
-                var insumos = {
-                    proceso: "borrarinsumos",
-                    id_insumo: cn.id_insumo
-                };
-                $http({
-                    method: 'POST',
-                    url: 'peticiones_insumos.jsp',
-                    params: insumos
-                }).then(function (res) {
-                    if (res.data.ok === true) {
-                        if (res.data[insumos.proceso] === true) {
-                            alert("Eliminado con éxito");
-                            //                                cn.listarContactos();
-                        } else {
-                            alert("Por favor vefifique sus datos");
-                        }
-                    } else {
-                        alert(res.data.errorMsg);
-                    }
-                });
-
-            };
-            cn.actualizarInsumos = function () {
-
-                var insumos = {
-                    proceso: "actualizarinsumos",
-                    id_insimo: cn.id_insimo,
-                    nombre_material: cn.nombre_material,
-                    unidad: cn.unidad,
-                    rendimiento: cn.rendimiento,
-                    precio: cn.precio
-                };
-                $http({
-                    method: 'POST',
-                    url: 'peticiones_insumos.jsp',
-                    params: insumos
-                }).then(function (res) {
-                    if (res.data.ok === true) {
-                        if (res.data[insumos.proceso] === true) {
-                            alert("actualizarinsumos con éxito");
-                            //                                cn.listarContactos();
-                        } else {
-                            alert("Por favor vefifique sus datos");
-                        }
-                    } else {
-                        alert(res.data.errorMsg);
-                    }
-                });
-
-            };
-           
+                       }else {
+                           alert("No se guerdo Por favor verifique sus datos");
+                       }
+                   }else {
+                       alert(res.data.errorMsg);
+                   }
+               };
+           };
+           cn.eliminarInsumo = function () {
+               var insumo = {
+                   proceso: "eliminarinsumo",
+                   id_insumo: cn.id_insumo
+               };
+               $http({
+                   method:'POST',
+                   url:'peticiones_insumos.jsp',
+                   params: insumo
+               }).then(function (res) {
+                   if(res.data.ok === true) {
+                       if(res.data[insumo.proceso] === true) {
+                           alert("eliminado con exito");
+                       }else {
+                           alert("Por Favor verifique sus datos");
+                       }
+                   }else {
+                       alert(res.data.errorMsg);
+                   }
+               });
+           };
+           cn.actualizarInsumo = function () {
+               var insumo = {
+                   proceso: "actualozarinsumo",
+                   id_insumo: cn.id_insumo,
+                   nombre_material: cn.nombre_material,
+                   unidad: cn.unidad,
+                   rendimiento: cn.rendimiento,
+                   precio: cn.precio
+               };
+               $http({
+                   method: 'POST',
+                   url: 'peticiones_insumos.jsp',
+                   params: insumo
+               }).then(function (res) {
+                   if (res.data.ok === true) {
+                       if (res.data[insumo.proceso] === true) {
+                           alert("actualizarinsumo con exito");
+                       }else {
+                           alert("Por favor verifique sus datos");
+                       }
+                   }else {
+                       alert(res.data.errorMsg);
+                   }
+               });
+           };
         }
     </script>
 </html>
